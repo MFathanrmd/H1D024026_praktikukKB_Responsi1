@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Analisis — Smart Diagnosis System</title>
+    <meta name="description" content="Hasil analisis sistem cerdas">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="bg-mesh">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+    <div class="bg-grid"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <div class="brand-icon">⚡</div>
+                <span>Smart Diagnosis System</span>
+            </a>
+            <div class="nav-links">
+                <a href="/fuzzy" class="nav-link">Fuzzy</a>
+                <a href="/pakar" class="nav-link">Pakar</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if data.tipe == 'fuzzy' %}
+        <div class="result-header animate-in">
+            <h2>📊 Hasil Analisis Burnout</h2>
+            <p>Berikut hasil analisis tingkat burnout berdasarkan data yang Anda masukkan</p>
+        </div>
+
+        <div class="result-card animate-in">
+            <h3>👤 Data Mahasiswa</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Nama</div>
+                    <div class="info-value">{{ data.nama }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">NIM</div>
+                    <div class="info-value">{{ data.nim }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Semester</div>
+                    <div class="info-value">{{ data.semester }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Beban Tugas</div>
+                    <div class="info-value">{{ data.tugas }} / 10</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Tingkat Stres</div>
+                    <div class="info-value">{{ data.stres }} / 10</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Motivasi Belajar</div>
+                    <div class="info-value">{{ data.motivasi }} / 10</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Kualitas Tidur</div>
+                    <div class="info-value">{{ data.tidur }} / 10</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Skor Burnout</div>
+                    <div class="info-value" style="color:{{ data.warna }}">{{ data.burnout }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-card animate-in">
+            <h3>📈 Tingkat Burnout</h3>
+            <div class="burnout-meter">
+                <div class="meter-circle" style="border: 3px solid {{ data.warna }};">
+                    <div class="meter-icon">{{ data.icon }}</div>
+                    <div class="meter-value" style="color:{{ data.warna }}">{{ data.burnout_persen }}%</div>
+                    <div class="meter-label">Skor Burnout</div>
+                </div>
+                <div style="margin-top:20px;">
+                    <span class="kategori-badge" style="background:{{ data.warna }}15; color:{{ data.warna }}; border:1px solid {{ data.warna }}35;">
+                        Kategori: {{ data.kategori }}
+                    </span>
+                </div>
+            </div>
+            <div class="rekomendasi-box">
+                <h4>💡 Rekomendasi</h4>
+                <p>{{ data.rekomendasi }}</p>
+            </div>
+        </div>
+
+        {% elif data.tipe == 'pakar' %}
+        <div class="result-header animate-in">
+            <h2>🔧 Hasil Diagnosa Motor</h2>
+            <p>Berikut hasil diagnosa kerusakan berdasarkan gejala yang dipilih</p>
+        </div>
+
+        <div class="result-card animate-in">
+            <h3>📋 Gejala yang Dipilih</h3>
+            <div class="gejala-tags">
+                {% for g in data.gejala_dipilih %}
+                <span class="gejala-tag">{{ g }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% for d in data.diagnosa_list %}
+        <div class="result-card animate-in">
+            <div class="diagnosa-card" style="border-left-color: {{ d.warna }};">
+                <div class="diagnosa-header">
+                    <span class="diagnosa-icon">{{ d.icon }}</span>
+                    <span class="diagnosa-title" style="color: {{ d.warna }};">{{ d.diagnosa }}</span>
+                </div>
+                <div class="diagnosa-section">
+                    <div class="diagnosa-section-title">Penyebab</div>
+                    <p>{{ d.penyebab }}</p>
+                </div>
+                <div class="diagnosa-section">
+                    <div class="diagnosa-section-title">Solusi</div>
+                    <p>{{ d.solusi }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="actions animate-in">
+            {% if data.tipe == 'fuzzy' %}
+            <a href="/fuzzy" class="btn btn-primary" style="width:auto">🔄 Analisis Ulang</a>
+            {% elif data.tipe == 'pakar' %}
+            <a href="/pakar" class="btn btn-teal" style="width:auto">🔄 Diagnosa Ulang</a>
+            {% endif %}
+            <a href="/" class="btn btn-outline">← Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 Smart Diagnosis System — Praktikum Kecerdasan Buatan</p>
+    </footer>
+    <script src="{{ url_for('static', filename='particles.js') }}"></script>
+</body>
+</html>

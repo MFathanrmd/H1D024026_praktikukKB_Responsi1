@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Diagnosis System</title>
+    <meta name="description" content="Platform sistem cerdas: Fuzzy Burnout Mahasiswa & Sistem Pakar Diagnosa Motor">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="bg-mesh">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+    <div class="bg-grid"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <div class="brand-icon">⚡</div>
+                <span>Smart Diagnosis System</span>
+            </a>
+            <div class="nav-links">
+                <a href="/fuzzy" class="nav-link">Fuzzy</a>
+                <a href="/pakar" class="nav-link">Pakar</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero animate-in">
+            <div class="hero-badge">✨ Praktikum Kecerdasan Buatan</div>
+            <h1>Smart Diagnosis<br>System</h1>
+            <p>Dua sistem kecerdasan buatan dalam satu platform — Fuzzy Logic & Sistem Pakar</p>
+        </div>
+
+        <div class="card-grid">
+            <a href="/fuzzy" class="feature-card fuzzy animate-in" id="card-fuzzy">
+                <div class="card-icon">🧠</div>
+                <h3>Sistem Fuzzy</h3>
+                <p>Analisis tingkat burnout mahasiswa menggunakan logika fuzzy berdasarkan beban tugas, stres, motivasi, dan kualitas tidur.</p>
+                <div class="card-arrow">Mulai Analisis →</div>
+            </a>
+
+            <a href="/pakar" class="feature-card pakar animate-in" id="card-pakar">
+                <div class="card-icon">🏍️</div>
+                <h3>Sistem Pakar</h3>
+                <p>Diagnosa kerusakan dasar pada sepeda motor menggunakan sistem pakar rule-based berdasarkan gejala yang terdeteksi.</p>
+                <div class="card-arrow">Mulai Diagnosa →</div>
+            </a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 Smart Diagnosis System — Praktikum Kecerdasan Buatan</p>
+    </footer>
+    <script src="{{ url_for('static', filename='particles.js') }}"></script>
+</body>
+</html>

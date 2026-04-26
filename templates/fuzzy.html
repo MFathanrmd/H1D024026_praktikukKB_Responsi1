@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Fuzzy — Burnout Mahasiswa</title>
+    <meta name="description" content="Analisis tingkat burnout mahasiswa menggunakan logika fuzzy">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="bg-mesh">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+    <div class="bg-grid"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <div class="brand-icon">⚡</div>
+                <span>Smart Diagnosis System</span>
+            </a>
+            <div class="nav-links">
+                <a href="/fuzzy" class="nav-link active">Fuzzy</a>
+                <a href="/pakar" class="nav-link">Pakar</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header animate-in">
+            <h2>🧠 Sistem Fuzzy Burnout</h2>
+            <p>Analisis tingkat burnout mahasiswa berdasarkan 4 variabel input</p>
+        </div>
+
+        {% if error %}
+        <div class="error-msg animate-in">⚠️ {{ error }}</div>
+        {% endif %}
+
+        <form action="/hasil" method="POST" class="form-card animate-in" id="form-fuzzy">
+            <input type="hidden" name="tipe" value="fuzzy">
+
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap" required>
+            </div>
+
+            <div class="form-group">
+                <label for="nim">NIM</label>
+                <input type="text" id="nim" name="nim" placeholder="Masukkan NIM" required>
+            </div>
+
+            <div class="form-group">
+                <label for="semester">Semester</label>
+                <input type="number" id="semester" name="semester" placeholder="Contoh: 4" min="1" max="14" required>
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="tugas">Beban Tugas</label>
+                    <span class="range-value" id="tugas-val">5</span>
+                </div>
+                <input type="range" id="tugas" name="tugas" min="1" max="10" value="5" oninput="document.getElementById('tugas-val').textContent=this.value">
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="stres">Tingkat Stres</label>
+                    <span class="range-value" id="stres-val">5</span>
+                </div>
+                <input type="range" id="stres" name="stres" min="1" max="10" value="5" oninput="document.getElementById('stres-val').textContent=this.value">
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="motivasi">Motivasi Belajar</label>
+                    <span class="range-value" id="motivasi-val">5</span>
+                </div>
+                <input type="range" id="motivasi" name="motivasi" min="1" max="10" value="5" oninput="document.getElementById('motivasi-val').textContent=this.value">
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="tidur">Kualitas Tidur</label>
+                    <span class="range-value" id="tidur-val">5</span>
+                </div>
+                <input type="range" id="tidur" name="tidur" min="1" max="10" value="5" oninput="document.getElementById('tidur-val').textContent=this.value">
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="btn-submit-fuzzy">🔍 Analisis Burnout</button>
+        </form>
+
+        <div class="actions" style="margin-top:20px">
+            <a href="/" class="btn btn-outline">← Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 Smart Diagnosis System — Praktikum Kecerdasan Buatan</p>
+    </footer>
+    <script src="{{ url_for('static', filename='particles.js') }}"></script>
+</body>
+</html>

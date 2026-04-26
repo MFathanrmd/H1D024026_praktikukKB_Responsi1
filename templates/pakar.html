@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Pakar — Diagnosa Kerusakan Motor</title>
+    <meta name="description" content="Diagnosa kerusakan dasar sepeda motor menggunakan sistem pakar">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="bg-mesh">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+    <div class="bg-grid"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <div class="brand-icon">⚡</div>
+                <span>Smart Diagnosis System</span>
+            </a>
+            <div class="nav-links">
+                <a href="/fuzzy" class="nav-link">Fuzzy</a>
+                <a href="/pakar" class="nav-link active">Pakar</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header animate-in">
+            <h2>🏍️ Sistem Pakar Motor</h2>
+            <p>Pilih gejala kerusakan yang dialami sepeda motor Anda</p>
+        </div>
+
+        {% if error %}
+        <div class="error-msg animate-in">⚠️ {{ error }}</div>
+        {% endif %}
+
+        <form action="/hasil" method="POST" class="form-card animate-in" id="form-pakar">
+            <input type="hidden" name="tipe" value="pakar">
+
+            <div class="form-group">
+                <label>Gejala Kerusakan</label>
+                <div class="checkbox-grid">
+                    <label class="checkbox-item" id="cb-mesin-sulit" onclick="toggleCheck(this)">
+                        <input type="checkbox" name="gejala" value="mesin_sulit">
+                        <div class="custom-checkbox"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                        <div>
+                            <div class="checkbox-label">🔑 Mesin sulit dinyalakan</div>
+                            <div class="checkbox-desc">Motor sulit hidup saat distarter atau di-kick</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item" id="cb-starter-rusak" onclick="toggleCheck(this)">
+                        <input type="checkbox" name="gejala" value="starter_rusak">
+                        <div class="custom-checkbox"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                        <div>
+                            <div class="checkbox-label">⚡ Starter tidak berfungsi</div>
+                            <div class="checkbox-desc">Tombol starter ditekan tapi tidak ada respons</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item" id="cb-mesin-mati" onclick="toggleCheck(this)">
+                        <input type="checkbox" name="gejala" value="mesin_mati">
+                        <div class="custom-checkbox"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                        <div>
+                            <div class="checkbox-label">💀 Mesin mati mendadak</div>
+                            <div class="checkbox-desc">Mesin tiba-tiba mati saat sedang berjalan</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item" id="cb-tidak-bertenaga" onclick="toggleCheck(this)">
+                        <input type="checkbox" name="gejala" value="tidak_bertenaga">
+                        <div class="custom-checkbox"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                        <div>
+                            <div class="checkbox-label">🐌 Motor tidak bertenaga</div>
+                            <div class="checkbox-desc">Akselerasi lambat dan tenaga terasa berkurang</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item" id="cb-asap-berlebihan" onclick="toggleCheck(this)">
+                        <input type="checkbox" name="gejala" value="asap_berlebihan">
+                        <div class="custom-checkbox"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                        <div>
+                            <div class="checkbox-label">💨 Asap knalpot berlebihan</div>
+                            <div class="checkbox-desc">Knalpot mengeluarkan asap tebal (putih/hitam)</div>
+                        </div>
+                    </label>
+
+                    <label class="checkbox-item" id="cb-suara-kasar" onclick="toggleCheck(this)">
+                        <input type="checkbox" name="gejala" value="suara_kasar">
+                        <div class="custom-checkbox"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                        <div>
+                            <div class="checkbox-label">🔊 Suara mesin kasar</div>
+                            <div class="checkbox-desc">Mesin mengeluarkan bunyi tidak normal / berisik</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-teal" id="btn-submit-pakar">🔍 Diagnosa Kerusakan</button>
+        </form>
+
+        <div class="actions" style="margin-top:20px">
+            <a href="/" class="btn btn-outline">← Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 Smart Diagnosis System — Praktikum Kecerdasan Buatan</p>
+    </footer>
+    <script src="{{ url_for('static', filename='particles.js') }}"></script>
+
+    <script>
+        function toggleCheck(el) {
+            const cb = el.querySelector('input[type="checkbox"]');
+            setTimeout(() => {
+                if (cb.checked) { el.classList.add('checked'); }
+                else { el.classList.remove('checked'); }
+            }, 10);
+        }
+    </script>
+</body>
+</html>
